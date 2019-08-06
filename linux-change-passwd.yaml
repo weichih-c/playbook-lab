@@ -1,0 +1,24 @@
+---
+- hosts: all
+  gather_facts: false
+
+  vars_prompt:
+    - name: username
+      prompt: "Which user to be change password?"
+    - name: new_password
+      prompt: "What is your new password?"
+
+  tasks:
+    - name: show server to be changed password
+      debug:
+        msg: "{{ inventory_hostname }}"
+      delegate_to: 127.0.0.1
+
+
+    - name: change your server root password
+      become: true
+      user:
+        name: "{{ username }}"
+        password: "{{ new_password }}"
+        
+    
